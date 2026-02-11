@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animações jQuery</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Explorando Animações jQuery</h1>
+
+        <div class="secoes">
+            <!-- Seção 1: fadeIn / fadeOut -->
+            <div class="secao">
+                <h2>fadeIn() / fadeOut()</h2>
+                <p>Clique no botão para ver o elemento desaparecer e reaparecer com efeito de transparência.</p>
+                
+                <div id="elemento1" class="elemento">
+                    <h3>Elemento com Fade</h3>
+                    <p>Este elemento usa fadeOut() e fadeIn() para desaparecer e reaparecer.</p>
+                </div>
+                
+                <button id="btnFade" class="btn btn-fade">Aplicar Fade</button>
+            </div>
+
+            <!-- Seção 2: slideToggle -->
+            <div class="secao">
+                <h2>slideToggle()</h2>
+                <p>Clique no botão para o elemento deslizar para cima e para baixo.</p>
+                
+                <div id="elemento2" class="elemento">
+                    <h3>Elemento com Slide</h3>
+                    <p>Este elemento usa slideToggle() para deslizar suavemente.</p>
+                </div>
+                
+                <button id="btnSlide" class="btn btn-slide">Aplicar Slide</button>
+            </div>
+
+            <!-- Seção 3: Combinado -->
+            <div class="secao">
+                <h2>fadeToggle()</h2>
+                <p>Clique no botão para alternar entre visível e invisível com efeito de desvanecer.</p>
+                
+                <div id="elemento3" class="elemento">
+                    <h3>Elemento com Fade Toggle</h3>
+                    <p>Este elemento usa fadeToggle() para alternar a transparência.</p>
+                </div>
+                
+                <button id="btnFadeToggle" class="btn btn-fade-toggle">Aplicar Fade Toggle</button>
+            </div>
+        </div>
+
+        <div class="info">
+            <p><strong>Dica:</strong> Abra a consola do navegador (F12) para ver as mensagens de log das animações.</p>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Script local -->
+    <script src="index.js"></script>
+</body>
+</html>

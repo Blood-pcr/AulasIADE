@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Tarefas</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+    <div class="contentor">
+        <cabecalho>
+            <div class="icone-cabecalho">✓</div>
+            <h1>As Minhas Tarefas</h1>
+        </cabecalho>
+
+        <div class="secao-adicionar-tarefa">
+            <input 
+                type="text" 
+                id="entradaTarefa" 
+                placeholder="Adicione uma tarefa..."
+                autocomplete="off"
+            >
+            <button id="botaoAdicionar">+ Adicionar</button>
+        </div>
+
+        <div class="cabecalho-tarefas">
+            <h2>Tarefas</h2>
+            <span id="contadorTarefas">0 tarefas</span>
+        </div>
+
+        <ul id="listarTarefas" class="lista-tarefas"></ul>
+
+        <div class="estado-vazio" id="estadoVazio">
+            <div class="icone-vazio">✓</div>
+            <p>Sem tarefas!</p>
+            <small>Crie a sua primeira tarefa acima</small>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/pt-br.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

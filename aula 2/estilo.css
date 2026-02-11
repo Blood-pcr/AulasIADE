@@ -1,0 +1,38 @@
+
+p{
+    font-size: 32px;
+    color: green; 
+
+}
+p.primeiro::after{
+    content: " ;";
+}
+p.primeiro::before{
+    content: " ";
+}
+p.primeiro {
+    font-size: 32px;
+    color: red; 
+
+}
+#nome {
+    font-size: 24px
+    color= rgb(75, 0, 130); 
+
+}
+.segundo > p::before{
+    content: "-";
+    }
+    p.segundo {
+    font-size: 20px
+    color= blue; 
+
+}  
+.segundo >p ::after{
+    content: " - fim do texto";
+    }
+a.terceiro:hover {
+    font-size: 18px
+    color= orange important; 
+
+}    

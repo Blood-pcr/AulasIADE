@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variaveis</title>
+</head>
+<body>
+    
+   <script>
+    let nome = "Diogo de Paula Cerqueira Rocha";
+    console.log(nome.toUpperCase());
+    console.log(nome.length);
+    console.log(nome.includes("a"));
+   </script> 
+
+   <script>
+    const var1 = 12;
+    const var2 = 6;
+
+    let soma = var1+var2;
+    console.log("A soma das duas variaveis é " + soma);
+
+    let media = (var1 + var2) / 2;
+    console.log("A média das duas variaveis é " + media);
+
+    let resto = var1 % var2;
+    console.log("O resto da divisão é " + resto);
+   </script>
+
+   <script>
+    const cidade = ["São Paulo", "Rio de Janeiro", "Belo Horizonte", "Curitiba", "Salvador"];
+    console.log(cidade[0]);
+    console.log(cidade[4]);
+    console.log("Número de cidades na lista: " + cidade.length);
+    cidade.push("Fortaleza");
+   </script>
+
+   <script>
+    function calcularArea(largura, altura) {
+        return largura * altura;
+    }
+
+    let area = calcularArea(5, 10);
+    console.log("A área do rectângulo é: " + area);
+   </script>
+   
+    <script>
+    function CalcularMedia(num1, num2, num3) {
+        return (num1 + num2 + num3) / 3;
+    }
+    let media_exfunct= CalcularMedia(12,34,64);
+    console.log("A media é ", media_exfunct) 
+   </script>
+
+   <script>
+    const saudacao_func = (nome) => {
+        return "Olá, " + nome + "!";
+    }
+
+    let saudacao= saudacao_func(Gonçalo);
+    console.log()
+   </script>
+</body>
+</html>

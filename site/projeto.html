@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loja - Projeto</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">BradockShop</div>
+    <nav class="main-nav">
+      <a href="#">Home</a>
+      <a href="#">Produtos</a>
+      <a href="#">Sobre</a>
+      <a href="#">Contacto</a>
+    </nav>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <h2>Filtros</h2>
+
+      <form id="filtersForm" class="filters" aria-label="Filtros de produtos">
+        <fieldset>
+          <legend>Categoria</legend>
+          <label><input type="checkbox" name="cat" value="camisetas"> Camisetas</label>
+          <label><input type="checkbox" name="cat" value="calcas"> Calças</label>
+          <label><input type="checkbox" name="cat" value="acessorios"> Acessórios</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Cor</legend>
+          <label><input type="checkbox" name="cor" value="branco"> Branco</label>
+          <label><input type="checkbox" name="cor" value="preto"> Preto</label>
+          <label><input type="checkbox" name="cor" value="azul"> Azul</label>
+          <label><input type="checkbox" name="cor" value="vermelho"> Vermelho</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Tamanho</legend>
+          <label><input type="checkbox" name="size" value="s"> S</label>
+          <label><input type="checkbox" name="size" value="m"> M</label>
+          <label><input type="checkbox" name="size" value="l"> L</label>
+          <label><input type="checkbox" name="size" value="xl"> XL</label>
+          <label><input type="checkbox" name="size" value="u"> U (Único)</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Preço</legend>
+          <label>até
+            <input id="priceRange" type="range" min="0" max="200" value="200" name="price">
+            <span id="priceValue">€200</span>
+          </label>
+        </fieldset>
+
+        <button type="submit">Aplicar</button>
+      </form>
+    </aside>
+
+    <section id="products" class="products" aria-label="Lista de produtos">
+      <!-- produto 1: calça azul -->
+      <article class="product-card" data-category="calcas" data-color="azul" data-sizes="s,m,l" data-price="24.99">
+        <img src="../images/calçaazul.avif" alt="Calça azul">
+        <h3>Calça Azul</h3>
+        <p class="sizes">Tamanhos: S, M, L</p>
+        <p class="price">€24.99</p>
+      </article>
+
+      <!-- produto 2: camisa azul -->
+      <article class="product-card" data-category="camisetas" data-color="azul" data-sizes="m,l,xl" data-price="39.50">
+        <img src="../images/camisa-oxford-azul.jpg" alt="Camisa azul">
+        <h3>Camisa Azul</h3>
+        <p class="sizes">Tamanhos: M, L, XL</p>
+        <p class="price">€39.50</p>
+      </article>
+
+      <!-- produto 3: boné branco (acessório) -->
+      <article class="product-card" data-category="acessorios" data-color="branco" data-sizes="u" data-price="18.00">
+        <img src="../images/bonebranco.jpg" alt="Boné branco">
+        <h3>Boné Branco</h3>
+        <p class="sizes">Tamanho: Único</p>
+        <p class="price">€18.00</p>
+      </article>
+
+      <!-- produto 4: camisa preta -->
+      <article class="product-card" data-category="camisetas" data-color="preto" data-sizes="s,m,l" data-price="49.99">
+        <img src="../images/camisa_preta.avif" alt="Camisa preta">
+        <h3>Camisa Preta</h3>
+        <p class="sizes">Tamanhos: S, M, L</p>
+        <p class="price">€49.99</p>
+      </article>
+
+      <!-- produto 5: boné vermelho (acessório) -->
+      <article class="product-card" data-category="acessorios" data-color="vermelho" data-sizes="u" data-price="12.00">
+        <img src="../images/bone_red.jpg" alt="Boné vermelho">
+        <h3>Boné Vermelho</h3>
+        <p class="sizes">Tamanho: Único</p>
+        <p class="price">€12.00</p>
+      </article>
+
+      <!-- produto 6: calça vermelha -->
+      <article class="product-card" data-category="calcas" data-color="vermelho" data-sizes="m,l,xl" data-price="29.90">
+        <img src="../images/calça_vermelha.jpg" alt="Calça vermelha">
+        <h3>Calça Vermelha</h3>
+        <p class="sizes">Tamanhos: M, L, XL</p>
+        <p class="price">€29.90</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="#">Ajuda</a> ·
+      <a href="#">Termos</a> ·
+      <a href="#">Privacidade</a>
+    </div>
+    <small>loja </small>
+  </footer>
+
+  <script>
+    (function () {
+      const form = document.getElementById('filtersForm');
+      const products = Array.from(document.querySelectorAll('.product-card'));
+      const priceRange = document.getElementById('priceRange');
+      const priceValue = document.getElementById('priceValue');
+
+      function getCheckedValues(name) {
+        return Array.from(form.querySelectorAll('input[name="' + name + '"]:checked')).map(i => i.value);
+      }
+
+      function applyFilters() {
+        const selectedCats = getCheckedValues('cat');
+        const selectedColors = getCheckedValues('cor');
+        const selectedSizes = getCheckedValues('size');
+        const maxPrice = parseFloat(priceRange.value) || Infinity;
+
+        products.forEach(p => {
+          const cat = p.dataset.category || '';
+          const color = p.dataset.color || '';
+          const sizes = (p.dataset.sizes || '').split(',').map(s => s.trim()).filter(Boolean);
+          const price = parseFloat(p.dataset.price);
+
+          const matchCat = !selectedCats.length || selectedCats.includes(cat);
+          const matchColor = !selectedColors.length || selectedColors.includes(color);
+          const matchSize = !selectedSizes.length || selectedSizes.some(s => sizes.includes(s));
+          const matchPrice = isNaN(price) ? true : price <= maxPrice;
+
+          p.style.display = (matchCat && matchColor && matchSize && matchPrice) ? '' : 'none';
+        });
+      }
+
+      // mostrar valor do range
+      function updatePriceLabel() {
+        priceValue.textContent = '€' + parseFloat(priceRange.value).toFixed(0);
+      }
+
+      priceRange.addEventListener('input', updatePriceLabel);
+
+      // aplicar filtros ao alterar e ao submeter (evita reload)
+      form.addEventListener('change', applyFilters);
+      form.addEventListener('submit', (e) => { e.preventDefault(); applyFilters(); });
+
+      // inicial
+      updatePriceLabel();
+      applyFilters();
+    })();
+  </script>
+</body>
+</html>

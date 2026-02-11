@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkpoint - Projeto Completo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Checkpoint - Projeto Completo</h1>
+
+        <div class="dark-mode-section">
+            <h2>1. Dark Mode</h2>
+            <button id="darkModeBtn" type="button" aria-pressed="false" aria-label="Alternar modo escuro">🌙 Ativar Dark Mode</button>
+        </div>
+
+        <div class="form-section">
+            <h2>2. Validador de Formulário</h2>
+            <form id="myForm">
+                <div class="form-group">
+                    <label for="nameInput">Nome (mínimo 3 caracteres):</label>
+                    <input type="text" id="nameInput" placeholder="Digite seu nome" required minlength="3" aria-describedby="errorMessage">
+                    <div id="errorMessage" class="error-message" role="alert" aria-hidden="true">
+                        ⚠️ O nome deve ter pelo menos 3 caracteres!
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn">Enviar</button>
+            </form>
+        </div>
+
+        <div class="timer-section">
+            <h2>3. Pomodoro Timer</h2>
+            <div id="timerDisplay" role="status" aria-live="polite">25:00</div>
+            <div class="timer-buttons">
+                <button class="timer-btn start" id="startBtn">▶️ Start</button>
+                <button class="timer-btn pause" id="pauseBtn">⏸️ Pause</button>
+                <button class="timer-btn reset" id="resetBtn">🔄 Reset</button>
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <h2>4. Filtro de Categorias</h2>
+            <div class="category-buttons">
+                <button class="category-btn" data-category="todos">Todos</button>
+                <button class="category-btn" data-category="Ficção">Ficção</button>
+                <button class="category-btn" data-category="Terror">Terror</button>
+                <button class="category-btn" data-category="Romance">Romance</button>
+                <button class="category-btn" data-category="Aventura">Aventura</button>
+            </div>
+            <div class="items-list" id="itemsList"></div>
+        </div>
+    </div>
+
+    <script>
+        const darkModeBtn = document.getElementById('darkModeBtn');
+        darkModeBtn.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            darkModeBtn.setAttribute('aria-pressed', String(isDark));
+            darkModeBtn.textContent = isDark ? '☀️ Desativar Dark Mode' : '🌙 Ativar Dark Mode';
+        });
+
+        const form = document.getElementById('myForm');
+        const nameInput = document.getElementById('nameInput');
+        const errorMessage = document.getElementById('errorMessage');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const inputValue = nameInput.value;
+            if (inputValue.length < 3) {
+                errorMessage.style.display = 'block';
+                errorMessage.setAttribute('aria-hidden', 'false');
+                nameInput.style.borderColor = 'red';
+                nameInput.setAttribute('aria-invalid', 'true');
+            } else {
+                errorMessage.style.display = 'none';
+                errorMessage.setAttribute('aria-hidden', 'true');
+                nameInput.style.borderColor = '#4CAF50';
+                nameInput.setAttribute('aria-invalid', 'false');
+                alert('✅ Formulário enviado com sucesso!');
+                nameInput.value = '';
+            }
+        });
+
+        let timeLeft = 25 * 60;
+        let timerInterval = null;
+        let isRunning = false;
+
+        const timerDisplay = document.getElementById('timerDisplay');
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        function updateDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        startBtn.addEventListener('click', function() {
+            if (!isRunning) {
+                isRunning = true;
+                timerInterval = setInterval(function() {
+                    if (timeLeft > 0) {
+                        timeLeft--;
+                        updateDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        isRunning = false;
+                        alert('⏰ Tempo acabou!');
+                    }
+                }, 1000);
+            }
+        });
+
+        pauseBtn.addEventListener('click', function() {
+            if (isRunning) {
+                clearInterval(timerInterval);
+                isRunning = false;
+            }
+        });
+
+        resetBtn.addEventListener('click', function() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            timeLeft = 25 * 60;
+            updateDisplay();
+        });
+
+        const items = [
+            { title: 'Harry Potter', category: 'Ficção' },
+            { title: 'O Iluminado', category: 'Terror' },
+            { title: 'Orgulho e Preconceito', category: 'Romance' },
+            { title: 'It - A Coisa', category: 'Terror' },
+            { title: 'Senhor dos Anéis', category: 'Aventura' },
+            { title: '1984', category: 'Ficção' },
+            { title: 'Drácula', category: 'Terror' },
+            { title: 'O Hobbit', category: 'Aventura' },
+            { title: 'A Culpa é das Estrelas', category: 'Romance' },
+            { title: 'Neuromancer', category: 'Ficção' }
+        ];
+
+        const itemsList = document.getElementById('itemsList');
+        const categoryButtons = document.querySelectorAll('.category-btn');
+
+        function displayItems(category) {
+            itemsList.innerHTML = '';
+            items.forEach(function(item) {
+                if (category === 'todos' || item.category === category) {
+                    const card = document.createElement('div');
+                    card.className = 'item-card';
+                    card.innerHTML = `
+                        <div class="item-category">${item.category}</div>
+                        <div class="item-title">${item.title}</div>
+                    `;
+                    itemsList.appendChild(card);
+                }
+            });
+        }
+
+        displayItems('todos');
+
+        categoryButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                displayItems(category);
+            });
+        });
+    </script>
+</body>
+</html>

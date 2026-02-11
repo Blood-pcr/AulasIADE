@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário</title>
+</head>
+<body>
+
+    <form action="/submit" method="post">
+        <header><h1>Formulário</h1></header>
+
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+        <br><br>
+
+        <label for="morada">Morada:</label>
+        <input type="text" id="morada" name="morada" required>
+        <br><br>
+
+        <label for="data_nasc">Data de Nascimento:</label>
+        <input type="date" id="data_nasc" name="data_nasc" required>
+        <br><br>
+
+        <label for="pais">País onde vive:</label>
+        <select id="pais" name="pais" required>
+            <option value="">--Selecione--</option>
+            <option value="pt">Portugal</option>
+            <option value="es">Espanha</option>
+            <option value="fr">França</option>
+            <option value="uk">Reino Unido</option>
+            <option value="br">Brasil</option>
+        </select>
+        <br><br>
+
+        <p>Linguagem favorita:</p>
+        <input type="radio" id="html" name="linguagem" value="html" required>
+        <label for="html">HTML</label>
+        <input type="radio" id="css" name="linguagem" value="css">
+        <label for="css">CSS</label>
+        <input type="radio" id="js" name="linguagem" value="js">
+        <label for="js">JavaScript</label>
+        <br><br>
+
+        <p>Veículos que possui (pode escolher nenhum ou vários):</p>
+        <input type="checkbox" id="carro" name="veiculos[]" value="carro">
+        <label for="carro">Carro</label>
+        <input type="checkbox" id="moto" name="veiculos[]" value="moto">
+        <label for="moto">Moto</label>
+        <input type="checkbox" id="bicicleta" name="veiculos[]" value="bicicleta">
+        <label for="bicicleta">Bicicleta</label>
+        <br><br>
+
+        <label for="cor">Cor favorita:</label>
+        <input type="color" id="cor" name="cor">
+        <br><br>
+
+        <label for="mensagem">Mensagem:</label>
+        <textarea id="mensagem" name="mensagem" rows="5" required></textarea>
+        <br><br>
+
+        <input type="submit" value="Enviar">
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+
+.transform{
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    display: inline-block;
+}
+
+.transform:hover{
+    background-color: blue;
+    transform: scale(2);
+}
+
+.animation pular{
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    display: inline-block;
+}
+
+@keyframes pular {
+    0%  {transform: translate(0px,0px);
+    }
+    25%  {background-color: (blue) scale(1.5);
+    }
+    50% {transform: translate(100px, 100px) color(white);
+    }  
+    75% {transform: rotate(45deg);
+    }
+    100% {transform-origin: 0%, 0%;
+    }
+}

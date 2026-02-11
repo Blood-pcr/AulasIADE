@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📝 Checkpoint - Monitor do Sistema</title>
+    <link rel="stylesheet" href="tabelas.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Checkpoint</h1>
+        
+        <div class="info-grid">
+            <div class="info-card">
+                <div class="info-label">Estado da Rede</div>
+                <div class="info-value">
+                    <span class="status-indicator" id="statusIndicator"></span>
+                    <span id="networkStatus">Verificando...</span>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-label">Resolução do Ecrã</div>
+                <div class="info-value" id="resolution">Carregando...</div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-label">Bateria</div>
+                <div class="info-value" id="batteryLevel">Verificando...</div>
+                <div class="battery-bar">
+                    <div class="battery-fill" id="batteryFill">0%</div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-label">Idioma</div>
+                <div class="info-value" id="language">Carregando...</div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-label">Atenção na Página</div>
+                <div class="info-value">Vezes que saiu:</div>
+                <div class="blur-count" id="blurCount">0</div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-label">Tipo de Conexão</div>
+                <div class="info-value" id="protocol">Verificando...</div>
+                <span class="protocol-badge" id="protocolBadge"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let contadorAbas = 0;
+
+        function atualizarStatusRede() {
+            const estaOnline = navigator.onLine;
+            const statusTexto = estaOnline ? 'Online' : 'Offline';
+            
+            document.getElementById('networkStatus').textContent = statusTexto;
+            document.getElementById('statusIndicator').className = 
+                `status-indicator ${estaOnline ? 'online' : 'offline'}`;
+        }
+
+        function atualizarResolucao() {
+            const largura = window.innerWidth;
+            const altura = window.innerHeight;
+            document.getElementById('resolution').textContent = `${largura} × ${altura}px`;
+        }
+
+        async function atualizarBateria() {
+            if (!('getBattery' in navigator)) {
+                document.getElementById('batteryLevel').textContent = 'Não suportado';
+                return;
+            }
+
+            try {
+                const bateria = await navigator.getBattery();
+                
+                const atualizarInterfaceUsuario = () => {
+                    const percentual = Math.round(bateria.level * 100);
+                    const estaCarregando = bateria.charging;
+                    const textoExibicao = estaCarregando ? `${percentual}% (Carregando...)` : `${percentual}%`;
+                    
+                    document.getElementById('batteryLevel').textContent = textoExibicao;
+                    
+                    const barraPreenchimento = document.getElementById('batteryFill');
+                    barraPreenchimento.style.width = percentual + '%';
+                    barraPreenchimento.textContent = percentual + '%';
+                    
+                    barraPreenchimento.className = 'battery-fill';
+                    if (estaCarregando) barraPreenchimento.classList.add('battery-charging');
+                    if (percentual < 20) barraPreenchimento.classList.add('battery-low');
+                };
+                
+                atualizarInterfaceUsuario();
+                bateria.addEventListener('levelchange', atualizarInterfaceUsuario);
+                bateria.addEventListener('chargingchange', atualizarInterfaceUsuario);
+                
+            } catch (err) {
+                document.getElementById('batteryLevel').textContent = 'Erro ao ler';
+            }
+        }
+
+        function atualizarIdioma() {
+            const idiomaBrowsers = navigator.language || 'Desconhecido';
+            const nodesIdiomas = {
+                'pt': 'Português',
+                'pt-BR': 'Português (Brasil)',
+                'pt-PT': 'Português (Portugal)',
+                'en': 'Inglês',
+                'en-US': 'Inglês (USA)',
+                'es': 'Espanhol',
+                'fr': 'Francês',
+                'de': 'Alemão',
+                'it': 'Italiano'
+            };
+            
+            document.getElementById('language').textContent = nodesIdiomas[idiomaBrowsers] || idiomaBrowsers;
+        }
+
+        function configurarContadorAbas() {
+            const incrementar = () => {
+                contadorAbas++;
+                document.getElementById('blurCount').textContent = contadorAbas;
+            };
+            
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) incrementar();
+            });
+            
+            window.addEventListener('blur', incrementar);
+        }
+
+        function atualizarProtocolo() {
+            const protocoloPagina = window.location.protocol;
+            const eSeguro = protocoloPagina === 'https:';
+            
+            document.getElementById('protocol').textContent = eSeguro ? 'HTTPS' : 'HTTP';
+            
+            const insigneBadge = document.getElementById('protocolBadge');
+            insigneBadge.textContent = eSeguro ? '🔒 Seguro' : '⚠️ Inseguro';
+            insigneBadge.className = `protocol-badge ${eSeguro ? 'secure' : 'insecure'}`;
+        }
+
+        window.addEventListener('online', atualizarStatusRede);
+        window.addEventListener('offline', atualizarStatusRede);
+        window.addEventListener('resize', atualizarResolucao);
+
+        atualizarStatusRede();
+        atualizarResolucao();
+        atualizarBateria();
+        atualizarIdioma();
+        configurarContadorAbas();
+        atualizarProtocolo();
+    </script>
+</body>
+</html>

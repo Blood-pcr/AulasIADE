@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkpoint - LocalStorage</title>
+    <link rel="stylesheet" href="checkpoint_localStorage.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Checkpoint - LocalStorage</h1>
+        
+        <h1 id="greeting"></h1>
+
+        <div class="input-group">
+            <label for="nameInput">Digite seu nome:</label>
+            <input type="text" id="nameInput" placeholder="Ex: Ricardo">
+        </div>
+
+        <div class="button-group">
+            <button id="saveBtn">💾 Save</button>
+            <button id="clearBtn">🗑️ Clear</button>
+        </div>
+
+        <div class="info">
+            ℹ️ <strong>Como funciona:</strong><br>
+            • Clique em "Save" para guardar seu nome<br>
+            • Recarregue a página - o nome permanece!<br>
+            • Clique em "Clear" para apagar
+        </div>
+
+        <div class="steps">
+            <h3>✅ Requisitos Implementados:</h3>
+            <ol>
+                <li><strong>Guardar:</strong> Nome guardado no localStorage ao clicar em "Save"</li>
+                <li><strong>Carregar:</strong> Nome carregado automaticamente ao abrir/recarregar a página</li>
+                <li><strong>Apagar:</strong> Nome removido do localStorage ao clicar em "Clear"</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        const inputNome = document.getElementById('nameInput');
+        const btnGuardar = document.getElementById('saveBtn');
+        const btnLimpar = document.getElementById('clearBtn');
+        const elementoSaudacao = document.getElementById('greeting');
+
+        const STORAGE_KEY = 'savedName';
+
+        function carregarNome() {
+            const nomeGuardado = localStorage.getItem(STORAGE_KEY);
+            if (nomeGuardado) {
+                elementoSaudacao.textContent = 'Olá, ' + nomeGuardado + '!';
+                console.info('Nome carregado do localStorage:', nomeGuardado);
+            } else {
+                elementoSaudacao.textContent = '';
+                console.info('Nenhum nome guardado no localStorage.');
+            }
+        }
+
+        function guardarNome() {
+            const nome = inputNome.value.trim();
+            if (!nome) {
+                alert('Por favor, digite um nome!');
+                return;
+            }
+            localStorage.setItem(STORAGE_KEY, nome);
+            elementoSaudacao.textContent = 'Olá, ' + nome + '!';
+            inputNome.value = '';
+            alert('Nome guardado com sucesso!');
+        }
+
+        function limparNome() {
+            localStorage.removeItem(STORAGE_KEY);
+            elementoSaudacao.textContent = '';
+            inputNome.value = '';
+            alert('Nome apagado com sucesso!');
+        }
+
+        window.addEventListener('load', carregarNome);
+        btnGuardar.addEventListener('click', guardarNome);
+        btnLimpar.addEventListener('click', limparNome);
+
+        console.log('Script carregado: funcionalidades de guardar/carregar/apagar nomes.');
+    </script>
+</body>
+</html>
